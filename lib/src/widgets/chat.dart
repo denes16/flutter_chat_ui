@@ -603,7 +603,21 @@ class ChatState extends State<Chat> {
         );
         messageWidget = widget.slidableMessageBuilder == null
             ? msgWidget
-            : widget.slidableMessageBuilder!(message, msgWidget);
+            : Builder(
+                builder: (context) => InheritedChatTheme(
+                  theme: widget.theme,
+                  child: InheritedL10n(
+                    l10n: widget.l10n,
+                    child: InheritedUser(
+                      user: widget.user,
+                      child: widget.slidableMessageBuilder!(
+                        message,
+                        msgWidget,
+                      ),
+                    ),
+                  ),
+                ),
+              );
       }
 
       return AutoScrollTag(
